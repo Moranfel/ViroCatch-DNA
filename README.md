@@ -1,8 +1,8 @@
 # 🦠 BegomoHunter v1.0 - HTS Begomovirus Detection Pipeline
 
-**BegomoHunter** es un pipeline bioinformático multietapa para la detección y ensamblaje de virus **Begomovirus** a partir de datos de secuenciación **Illumina**, **Oxford Nanopore (ONT)** y **Amplicones de RCA-R**.
+**BegomoHunter is a multi‐stage bioinformatics pipeline for the detection and assembly of Begomovirus genomes from Illumina, Oxford Nanopore (ONT), and RCA-R Amplicon sequencing data**.
 
-> 🧬 Versión 1.0 - Desarrollado por Félix Morán
+> 🧬 Versión 1.0 - Developed by Félix Morán
 
 ![BegomoHunter Logo](https://img.shields.io/badge/status-STABLE-green.svg)
 ![Python](https://img.shields.io/badge/python-3.6%2B-blue.svg)
@@ -10,7 +10,7 @@
 
 ---
 
-## ⚙️ COMANDOS
+## ⚙️ COMMANDS
 
 python Begomo_Hunter.py \
   --read_type <long|short> \
@@ -25,35 +25,34 @@ python Begomo_Hunter.py \
   [--motif TAATATTA] \
   [--rca_r_product]
 
+Note: To avoid issues, do not use spaces in the input file names (--input_ONT, --input_Illumina_R1, --input_Illumina_R2) or in --outdir.
 ---
-## 🧬 BASES DE DATOS 
+## 🧬 DATABASES 🦠 
 
-Parametro --db: Este parámetro requiere una base de datos BLAST previamente construida. Puedes crear una a partir de un archivo FASTA de referencia usando makeblastdb.
-ejemplo: 
+Parameter: --db: Path to a pre‐built BLAST nucleotide database. You can create one from a reference FASTA file using makeblastdb.
+Example:
   makeblastdb \
   -in begomovirus_ref.fasta \
   -dbtype nucl \
   -out blast_db/begomo_db \
   -parse_seqids
 
-Parametro --kraken_db: Kraken2 database, se debe contruir como se menciona en ^*[Kraken2](https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown) y se recomuenda usar la collection [PlusPFP](https://benlangmead.github.io/aws-indexes/k2)
+Parametro --kraken_db: Path to a Kraken2 database, built as described in the ^*[Kraken2](https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown) We recommend the collection [PlusPFP](https://benlangmead.github.io/aws-indexes/k2)
 
-## 🚀 CARACTERÍSTICAS
+## 🚀 FEATURES
 
-- Control de calidad con [`fastp`](https://github.com/OpenGene/fastp) y `fastplong`
-- Clasificación taxonómica con [`Kraken2`](https://ccb.jhu.edu/software/kraken2/)
-- Filtro por complejidad y tamaño
-- Fragmentación por motivo viral (RCA-R compatible)
-- Ensamblaje short reads [`SPAdes`](https://cab.spbu.ru/software/spades/) o para long reads [`Flye`](https://github.com/fenderglass/Flye)
-- Análisis final con [`BLASTn`](https://blast.ncbi.nlm.nih.gov/) y [`Recentrifuge`](https://github.com/khyox/recentrifuge)
+- Quality control with [`fastp`](https://github.com/OpenGene/fastp) for short reads and [`fastplong`](https://github.com/OpenGene/fastplong) for long reads
+- Taxonomic classification with [`Kraken2`](https://ccb.jhu.edu/software/kraken2/)
+- Complexity and size filtering for begomovirus
+- Viral‐motif‐based fragmentation  (just for RCA-R sequences  [--rca_r_product])
+- Assembly of short reads with [`SPAdes`](https://cab.spbu.ru/software/spades/) or long reads with [`Flye`](https://github.com/fenderglass/Flye)
+- Final analysis with BLASTn [`BLASTn`](https://blast.ncbi.nlm.nih.gov/) and Recentrifuge [`Recentrifuge`](https://github.com/khyox/recentrifuge)
 
 ---
 
-## 🧰 REQUISITOS-DEPENDENCIAS
+## 🧰 EXTERNAL REQUIREMENTS & DEPENDENCIES
 
-### 🔧 Dependencias externas
-
-| Software       | Descripción                |
+| Software       | Description                |
 |----------------|----------------------------|
 | `fastp`        | QC de Illumina             |
 | `fastplong`    | QC para ONT                |
@@ -67,7 +66,7 @@ Parametro --kraken_db: Kraken2 database, se debe contruir como se menciona en ^*
 ### 📦 PYTHON
 
 - Python 3.6 o superior
-- Módulos requeridos:
+- Required modules:
   - `biopython`
 
 Instalación:
