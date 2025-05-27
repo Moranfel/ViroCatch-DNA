@@ -45,3 +45,19 @@
 Instalación:
 ```bash
 pip install biopython
+
+---
+
+### Uso
+python Begomo_Hunter.py \
+  --read_type <long|short> \
+  --input_ONT <ONT.fastq.gz> \
+  --input_Illumina_R1 <R1.fastq.gz> \
+  --input_Illumina_R2 <R2.fastq.gz> \
+  --outdir <output_directory> \
+  --threads 8 \
+  --db <blast_db_path> \
+  --kraken_db <kraken2_db_path> \
+  [--quality_threshold 20] \
+  [--motif TAATATTA] \
+  [--rca_r_product]
