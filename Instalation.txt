@@ -27,4 +27,5 @@
 4. **Verify the installation**
    python Begomo_Hunter.py --help
 
+delete Instalation.txt
  
