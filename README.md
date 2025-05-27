@@ -38,7 +38,7 @@ Example:
   -out blast_db/begomo_db \
   -parse_seqids
 
-Parameter --kraken_db: Path to a Kraken2 database, built as described in the ^*[Kraken2](https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown) We recommend the collection [PlusPFP](https://benlangmead.github.io/aws-indexes/k2)
+Parameter --kraken_db: Path to a Kraken2 database, built as described in [Kraken2](https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown) We recommend the collection [PlusPFP](https://benlangmead.github.io/aws-indexes/k2)
 
 ## 🚀 FEATURES
 
