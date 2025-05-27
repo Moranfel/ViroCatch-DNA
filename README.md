@@ -25,7 +25,8 @@ python Begomo_Hunter.py \
   [--motif TAATATTA] \
   [--rca_r_product]
 
-Note: To avoid issues, do not use spaces in the input file names (--input_ONT, --input_Illumina_R1, --input_Illumina_R2) or in --outdir.
+Note: To avoid issues, do not use spaces in the input file names (--input_ONT, --input_Illumina_R1, --input_Illumina_R2) or in --outdir
+
 ---
 ## 🧬 DATABASES 🦠 
 
