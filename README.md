@@ -46,7 +46,6 @@ Instalación:
 ```bash
 pip install biopython
 
----
 
 ### Uso
 python Begomo_Hunter.py \
