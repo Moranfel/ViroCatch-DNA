@@ -30,7 +30,7 @@ Note: To avoid issues, do not use spaces in the input file names (--input_ONT, -
 ---
 ## 🧬 DATABASES 🦠 
 
-Parameter: --db: Path to a pre‐built BLAST nucleotide database. You can create one from a reference FASTA file using makeblastdb.
+Parameter --db: Path to a pre‐built BLAST nucleotide database. You can create one from a reference FASTA file using makeblastdb.
 Example:
   makeblastdb \
   -in begomovirus_ref.fasta \
@@ -38,7 +38,7 @@ Example:
   -out blast_db/begomo_db \
   -parse_seqids
 
-Parametro --kraken_db: Path to a Kraken2 database, built as described in the ^*[Kraken2](https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown) We recommend the collection [PlusPFP](https://benlangmead.github.io/aws-indexes/k2)
+Parameter --kraken_db: Path to a Kraken2 database, built as described in the ^*[Kraken2](https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown) We recommend the collection [PlusPFP](https://benlangmead.github.io/aws-indexes/k2)
 
 ## 🚀 FEATURES
 
