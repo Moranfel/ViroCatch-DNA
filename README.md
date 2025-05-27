@@ -18,11 +18,11 @@ python Begomo_Hunter.py \
   --input_Illumina_R1 <R1.fastq.gz> \
   --input_Illumina_R2 <R2.fastq.gz> \
   --outdir <output_directory> \
-  --threads 8 \
+  --threads \ By default: 8 
   --db <blast_db_path> \
   --kraken_db <kraken2_db_path> \
-  [--quality_threshold 20] \
-  [--motif TAATATTA] \
+  [--quality_threshold] \ By default: 20
+  [--motif] \ By default: TAATATTA
   [--rca_r_product]
 
 Note: To avoid issues, do not use spaces in the input file names (--input_ONT, --input_Illumina_R1, --input_Illumina_R2) or in --outdir
