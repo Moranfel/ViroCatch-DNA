@@ -1,6 +1,6 @@
 # 🦠 BegomoHunter v1.0 - HTS Begomovirus Detection Pipeline
 
-**BegomoHunter is a multi‐stage bioinformatics pipeline for the detection and assembly of Begomovirus genomes from Illumina, Oxford Nanopore (ONT), and RCA-R Amplicon sequencing data**.
+**BegomoHunter is a multi‐stage bioinformatics pipeline for detecting and assembling Begomovirus genomes from Illumina, Oxford Nanopore (ONT), and RCA-R Amplicon sequencing data**.
 
 > 🧬 Versión 1.0 - Developed by Félix Morán
 
@@ -46,7 +46,7 @@ Parametro --kraken_db: Path to a Kraken2 database, built as described in the ^*[
 - Complexity and size filtering for begomovirus
 - Viral‐motif‐based fragmentation  (just for RCA-R sequences  [--rca_r_product])
 - Assembly of short reads with [`SPAdes`](https://cab.spbu.ru/software/spades/) or long reads with [`Flye`](https://github.com/fenderglass/Flye)
-- Final analysis with BLASTn [`BLASTn`](https://blast.ncbi.nlm.nih.gov/) and Recentrifuge [`Recentrifuge`](https://github.com/khyox/recentrifuge)
+- Final analysis with [`BLASTn`](https://blast.ncbi.nlm.nih.gov/) and  [`Recentrifuge`](https://github.com/khyox/recentrifuge)
 
 ---
 
