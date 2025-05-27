@@ -53,16 +53,16 @@ Parameter --kraken_db: Path to a Kraken2 database, built as described in the ^*[
 
 ## 🧰 EXTERNAL REQUIREMENTS & DEPENDENCIES
 
-| Software       | Description                |
-|----------------|----------------------------|
-| `fastp`        | QC de Illumina             |
-| `fastplong`    | QC para ONT                |
-| `kraken2`      | Clasificación taxonómica   |
-| `blastn`       | Análisis final de ensamblaje |
-| `flye`         | Ensamblador ONT            |
-| `spades.py`    | Ensamblador Illumina       |
-| `rcf`          | CLI de Recentrifuge        |
-| `awk`, `python`, `gzip`, `sort` | Utilidades estándar |
+| Software       | Description                         |
+|----------------|-------------------------------------|
+| `fastp`        | QC - Illumina                       |
+| `fastplong`    | QC - ONT                            |
+| `kraken2`      | Taxonomy Clasification              |
+| `blastn`       | Final analysis of contigs           |
+| `flye`         | Assembler long reads                |
+| `spades.py`    | Assembler short reads               |
+| `rcf`          | View taxonomy Clasification         |
+| `awk`, `python`, `gzip`, `sort` | Standard utilities |
 
 ### 📦 PYTHON
 
