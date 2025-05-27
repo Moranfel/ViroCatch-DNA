@@ -1,0 +1,30 @@
+# BegomoHunter v1.0
+
+🦠 **BegomoHunter** is a bioinformatics pipeline for detecting and assembling **Begomovirus** genomes from Illumina, Oxford Nanopore (ONT), and RCA-R amplicon sequencing data.
+
+---
+
+## 📋 Repository Contents
+
+- `environment.yml` – Conda environment definition with all required dependencies.  
+- `Begomo_Hunter.py` – Main pipeline script.
+
+---
+
+## ⚙️ Installation
+
+1. **Clone the repository**  
+   ```bash
+   git clone https://github.com/Moranfel/Begomo_Hunter.git
+   cd BegomoHunter
+
+2. **Create the Conda environment**
+   conda env create -f BegomoHunter_environment.yml
+
+3. **Activate the environment**
+   conda activate begomohunter
+
+4. **Verify the installation**
+   python Begomo_Hunter.py --help
+
+ 
