@@ -1,5 +1,7 @@
 # 🦠 🧬BegomoHunter v1.0 - HTS Begomovirus Detection Pipeline 🧬   
 
+# 🦠 BegomoHunter v1.0 - HTS Begomovirus Detection Pipeline
+
 **BegomoHunter** es un pipeline bioinformático multietapa para la detección y ensamblaje de virus **Begomovirus** a partir de datos de secuenciación **Illumina**, **Oxford Nanopore (ONT)** y **RCA-R**.
 
 > 🧬 Versión 1.0 - Desarrollado por Moran et al., 2025
