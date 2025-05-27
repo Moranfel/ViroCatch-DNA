@@ -57,16 +57,16 @@ Parameter --kraken_db: Path to a Kraken2 database, built as described in [Kraken
 |----------------|-------------------------------------|
 | `fastp`        | QC - Illumina                       |
 | `fastplong`    | QC - ONT                            |
-| `kraken2`      | Taxonomy Clasification              |
+| `kraken2`      | Taxonomy clasification              |
 | `blastn`       | Final analysis of contigs           |
 | `flye`         | Assembler long reads                |
 | `spades.py`    | Assembler short reads               |
-| `rcf`          | View taxonomy Clasification         |
+| `rcf`          | View taxonomy clasification         |
 | `awk`, `python`, `gzip`, `sort` | Standard utilities |
 
 ### 📦 PYTHON
 
-- Python 3.6 o superior
+- Python >3.6
 - Required modules:
   - `biopython`
 
