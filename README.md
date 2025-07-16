@@ -1,4 +1,4 @@
-# 🦠 BegomoHunter - HTS Begomovirus Detection Pipeline
+# 🦠 BegomoHunter - HTS Begomovirus Detection Pipeline-Draft
 
 **BegomoHunter is a multi‐stage bioinformatics Python pipeline for detecting and assembling Begomovirus genomes from Illumina, Oxford Nanopore (ONT), and RCA-R Amplicon sequencing data**.
 
