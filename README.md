@@ -79,7 +79,7 @@ Parameter --kraken_db: Path to a Kraken2 database, built as described in [Kraken
 5. Verify the installation (help): `python begomohunter.py -h`
 
 ---
-
+```bash
 # 🦠 Work-Flow of Pipeline
 
 +-----------------------+
