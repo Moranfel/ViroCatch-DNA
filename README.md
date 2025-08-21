@@ -4,7 +4,7 @@
 
 > 🧬 Versión 1.0 - Developed by Félix Morán
 
-Citation:
+If you use BegomoHunter please cite:
 
 ![BegomoHunter Logo](https://img.shields.io/badge/status-STABLE-green.svg)
 ![Python](https://img.shields.io/badge/python-3.6%2B-blue.svg)
