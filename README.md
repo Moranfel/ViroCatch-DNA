@@ -64,15 +64,21 @@ Parameter --kraken_db: Path to a Kraken2 database, built as described in [Kraken
 | `rcf`          | View taxonomy clasification         |
 | `awk`, `python`, `gzip`, `sort` | Standard utilities |
 
-### 📦 PYTHON
+### 📦 Requirements
 
-- Python >3.6
-- Required modules:
-  - `biopython`
+- **Python** ≥ 3.6  
+- Required modules:  
+  - `biopython`  
 
-Instalación:
-```bash
-pip install biopython
+### 🚀 Installation steps
+
+1. Install conda (recommended Miniconda): https://docs.conda.io/en/latest/miniconda.html  
+2. Create the `BegomoHunter_env` environment from the `.yml`: `conda env create -n BegomoHunter_env -f BegomoHunter_environment.yml`  
+3. Activate the environment: `conda activate BegomoHunter_env`  
+4. Run the pipeline: `python begomohunter.py`  
+5. Verify the installation (help): `python begomohunter.py -h`
+
+---
 
 # 🦠 Work-Flow of Pipeline
 
