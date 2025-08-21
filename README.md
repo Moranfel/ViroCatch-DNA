@@ -3,7 +3,8 @@
 **BegomoHunter is a multi‐stage bioinformatics Python pipeline for detecting and assembling Begomovirus genomes from Illumina, Oxford Nanopore (ONT), and RCA-R Amplicon sequencing data**.
 
 > 🧬 Versión 1.0 - Developed by Félix Morán
-> Citation:
+
+Citation:
 
 ![BegomoHunter Logo](https://img.shields.io/badge/status-STABLE-green.svg)
 ![Python](https://img.shields.io/badge/python-3.6%2B-blue.svg)
