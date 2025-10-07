@@ -1,12 +1,12 @@
-# 🦠 BegomoHunter - HTS Begomovirus Detection Pipeline-Draft
+# 🦠 ViroCatch - HTS DNA-Virus Detection Pipeline-Draft
 
-**BegomoHunter is a multi‐stage bioinformatics Python pipeline for detecting and assembling Begomovirus genomes from Illumina, Oxford Nanopore (ONT), and RCA-R Amplicon sequencing data**.
+**ViroCatch is a multi‐stage bioinformatics Python pipeline for detecting and assembling DNA-Viral genomes from Illumina, Oxford Nanopore (ONT), and RCA-R Amplicon sequencing data**.
 
 > 🧬 Versión 1.0 - Developed by Félix Morán
 
-If you use BegomoHunter please cite:
+If you use ViroCatch please cite:
 
-![BegomoHunter Logo](https://img.shields.io/badge/status-STABLE-green.svg)
+![ViroCatch Logo](https://img.shields.io/badge/status-STABLE-green.svg)
 ![Python](https://img.shields.io/badge/python-3.6%2B-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)
 
@@ -14,7 +14,7 @@ If you use BegomoHunter please cite:
 
 ## ⚙️ COMMANDS
 
-python Begomo_Hunter.py \
+python ViroCatch.py \
   --read_type <long|short> \
   --input_ONT <ONT.fastq.gz> \
   --input_Illumina_R1 <R1.fastq.gz> \
@@ -33,7 +33,7 @@ Note: To avoid issues, do not use spaces in the input file names (--input_ONT, -
 ## 🧬 DATABASES 🦠 
 
 Parameter --db: Path to a pre‐built BLAST nucleotide database. You can create one from a reference FASTA file using makeblastdb.
-Example:
+Example of Begomovirus db:
   makeblastdb \
   -in begomovirus_ref.fasta \
   -dbtype nucl \
@@ -46,7 +46,7 @@ Parameter --kraken_db: Path to a Kraken2 database, built as described in [Kraken
 
 - Quality control with [`fastp`](https://github.com/OpenGene/fastp) for short reads and [`fastplong`](https://github.com/OpenGene/fastplong) for long reads
 - Taxonomic classification with [`Kraken2`](https://ccb.jhu.edu/software/kraken2/)
-- Complexity and size filtering for begomovirus
+- Complexity and size filtering for DNA viruses
 - Viral‐motif‐based fragmentation  (just for RCA-R sequences  [--rca_r_product])
 - Assembly of short reads with [`SPAdes`](https://cab.spbu.ru/software/spades/) or long reads with [`Flye`](https://github.com/fenderglass/Flye)
 - Final analysis with [`BLASTn`](https://blast.ncbi.nlm.nih.gov/) and  [`Recentrifuge`](https://github.com/khyox/recentrifuge)
@@ -75,10 +75,10 @@ Parameter --kraken_db: Path to a Kraken2 database, built as described in [Kraken
 ### 🚀 Installation steps
 
 1. Install conda (recommended Miniconda): https://docs.conda.io/en/latest/miniconda.html  
-2. Create the `BegomoHunter_env` environment from the `.yml`: `conda env create -n BegomoHunter_env -f BegomoHunter_environment.yml`  
-3. Activate the environment: `conda activate BegomoHunter_env`  
-4. Run the pipeline: `python begomohunter.py`  
-5. Verify the installation (help): `python begomohunter.py -h`
+2. Create the `ViroCatch_env` environment from the `.yml`: `conda env create -n ViroCatch_env -f ViroCatch_environment.yml`  
+3. Activate the environment: `conda activate ViroCatch_env`  
+4. Run the pipeline: `python ViroCatch.py`  
+5. Verify the installation (help): `python ViroCatch.py -h`
 
 ---
 ```bash
