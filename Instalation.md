@@ -1,6 +1,6 @@
-# BegomoHunter v1.0
+# ViroCatch-DNA v1.0
 
-🦠 **BegomoHunter** is a bioinformatics pipeline for detecting and assembling **Begomovirus** genomes from Illumina, Oxford Nanopore (ONT), and RCA-R amplicon sequencing data.
+🦠 **ViroCatch-DNA** is a bioinformatics pipeline for detecting and assembling **Begomovirus** genomes from Illumina, Oxford Nanopore (ONT), and RCA-R amplicon sequencing data.
 
 ---
 
@@ -16,8 +16,8 @@
 1. **Clone the repository**  
    ```bash
    git clone https://github.com/Moranfel/Begomo_Hunter.git
-   cd BegomoHunter
-2. conda env create -f BegomoHunter_environment.yml
-3. conda activate begomohunter
+   cd ViroCatch-DNA
+2. conda env create -f ViroCatch-DNA_environment.yml
+3. conda activate ViroCatch-DNA
 4. python Begomo_Hunter.py --help
 
