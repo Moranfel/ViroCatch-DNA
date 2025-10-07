@@ -7,7 +7,7 @@
 ## 📋 Repository Contents
 
 - `environment.yml` – Conda environment definition with all required dependencies.  
-- `Begomo_Hunter.py` – Main pipeline script.
+- `ViroCatch.py` – Main pipeline script.
 
 ---
 
