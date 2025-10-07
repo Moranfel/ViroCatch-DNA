@@ -1,6 +1,6 @@
 # ViroCatch-DNA v1.0
 
-🦠 **ViroCatch-DNA** is a bioinformatics pipeline for detecting and assembling **Begomovirus** genomes from Illumina, Oxford Nanopore (ONT), and RCA-R amplicon sequencing data.
+🦠 **ViroCatch-DNA** is a bioinformatics pipeline for detecting and assembling **DNA-virus** genomes from Illumina, Oxford Nanopore (ONT), and RCA-R amplicon sequencing data.
 
 ---
 
