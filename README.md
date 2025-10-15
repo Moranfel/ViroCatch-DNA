@@ -1,4 +1,6 @@
-# 🦠 ViroCatch - HTS DNA-Virus Detection Pipeline-Draft
+
+# <img width="100" height="100" alt="ViroCatch" src="https://github.com/user-attachments/assets/a2a64940-d16e-46ae-a1dd-ceeb5ba78e47" />  ViroCatch - HTS DNA-Virus Detection Pipeline-Draft
+
 
 **ViroCatch is a multi‐stage bioinformatics Python pipeline for detecting and assembling DNA-Viral genomes from Illumina, Oxford Nanopore (ONT), and RCA-R Amplicon sequencing data**.
 
