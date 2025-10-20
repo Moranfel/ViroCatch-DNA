@@ -17,44 +17,44 @@ import re
 
 def print_logo():
     logo = r"""
-🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠
-██████╗ ███████╗ ██████╗  ██████╗ ███╗   ███╗ ██████╗      ██╗  ██╗██╗   ██╗███╗   ██╗████████╗███████╗██████╗
-██╔══██╗██╔════╝██╔════╝ ██╔═══██╗████╗ ████║██╔═══██╗     ██║  ██║██║   ██║████╗  ██║╚══██╔══╝██╔════╝██╔══██╗
-██████╔╝█████╗  ██║  ███╗██║   ██║██╔████╔██║██║   ██║     ███████║██║   ██║██╔██╗ ██║   ██║   █████╗  ██████╔╝
-██╔══██╗██╔══╝  ██║   ██║██║   ██║██║╚██╔╝██║██║   ██║     ██╔══██║██║   ██║██║╚██╗██║   ██║   ██╔══╝  ██╔══██╗
-██████║ ███████╗╚██████╔╝╚██████╔╝██║ ╚═╝ ██║╚██████╔╝     ██║  ██║╚██████╔╝██║ ╚████║   ██║   ███████╗██║  ██║
-╚═╝     ╚══════╝ ╚═════╝  ╚═════╝ ╚═╝     ╚═╝ ╚═════╝      ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
-🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠 V.1.0 by Moran et al. 2025 🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠🦠
+🦠🦠🧬🦠🦠🦠🧬🦠🦠🦠🧬🦠🦠🦠🧬🦠🦠🦠🧬🦠🦠🦠🧬🦠🦠🦠🧬🦠🦠🦠🧬🦠🦠🦠🧬🦠🦠🦠🧬
+██╗   ██╗██╗██████╗   ██████╗         ██████╗ ███████╗████████╗██████║ ██║  ██║
+██║   ██║██║██╔══██╗ ██╔═══██╗        ██╔═══╝ ██╔══██╗╚══██╔══╝██╔═══  ██║  ██║
+██║   ██║██║███████║ ██║   ██║🧬🦠🧬 ██║     ███████║   ██║   ██║     ███████║   
+╚██╗ ██╔╝██║██║  ██║ ██║   ██║        ██║     ██║  ██║   ██║   ██║     ██║  ██║ 
+ ╚████╔╝ ██║██║  ██║ ████████║        ██████  ██║  ██║   ██║   ██████║ ██║  ██║
+  ╚═══╝  ╚═╝╚═    ═╝ ╚═══════╝       ╚══════╝╚══╝ ╚══╝   ╚═╝  ╚══════╝ ══╝  ══╝
+🦠🦠🧬🦠🦠🦠🧬🦠🦠🦠🧬 V.1.0 by Morán et al. 2025 🦠🦠🦠🧬🦠🦠🦠🧬🦠🦠🦠🧬🦠🦠🦠🧬
 """
     print(logo)
-    print(".     🧬 Detection of Begomovirus from ONT sequences, RCA-R-ONT, and Illumina 🧬       \n")
+    print(" 🧬 Detection and identification of DNA viruses from ONT, RCA-R-ONT, and Illumina data 🧬\n")
 
 def check_dependencies():
-    print("🔍 Verificando dependencias...")
+    print("🔍 Checking dependencies...")
     required_python_modules = ["Bio"]
     required_commands = ["fastp", "fastplong", "kraken2", "flye", "python", "blastn", "awk", "spades.py"]
     for module in required_python_modules:
         if importlib.util.find_spec(module) is None:
-            print(f"❌ Módulo faltante: {module}. Instálalo con pip.")
+            print(f"❌ Missing module: {module}. Instálalo con pip.")
             sys.exit(1)
     for cmd in required_commands:
         if not shutil.which(cmd):
-            print(f"❌ Comando faltante en PATH: {cmd}")
+            print(f"❌ Missing command in PATH: {cmd}")
             sys.exit(1)
     global extract_kraken_script_path
     extract_script = Path("extract_kraken_reads.py")
     if not extract_script.exists():
         extract_script = Path(__file__).parent / "extract_kraken_reads.py"
         if not extract_script.exists():
-            print("❌ Faltante extract_kraken_reads.py")
+            print("❌ Missing extract_kraken_reads.py")
             sys.exit(1)
     extract_kraken_script_path = str(extract_script.resolve())
-    print("✅ Dependencias verificadas.\n")
+    print("✅ Dependencies verified.\n")
 
 def run_command(command, description, suppress_output=False, check_existing_output=None):
-    print(f"🔧 Ejecutando: {description}")
+    print(f"🔧 Running: {description}")
     if check_existing_output and Path(check_existing_output).exists():
-        print(f"✅ {description} ya existe, se omite.")
+        print(f"✅ {description} Already exists, skipping.")
         return
     try:
         result = subprocess.run(command, check=True, text=True, capture_output=True)
@@ -62,13 +62,14 @@ def run_command(command, description, suppress_output=False, check_existing_outp
             print(result.stdout)
             print(result.stderr)
     except subprocess.CalledProcessError as e:
-        print(f"❌ Error ejecutando: {e.cmd}\n{e.stderr}")
+        print(f"❌ Error while running: {e.cmd}\n{e.stderr}")
         sys.exit(1)
 
 def run_kraken2(input_fastq, output_report, output_output, db_path, threads):
+    global memory_mapping
     if output_report.exists() and output_report.stat().st_size > 0 and \
        output_output.exists() and output_output.stat().st_size > 0:
-        print(f"✅ Clasificación Kraken2 ya existe para {input_fastq.name}, se omite.")
+        print(f"✅ Kraken2 classification already exists for {input_fastq.name}, Skipping.")
         return
 
     kraken2_command = [
@@ -78,6 +79,10 @@ def run_kraken2(input_fastq, output_report, output_output, db_path, threads):
         "--threads", str(threads),
         str(input_fastq)
     ]
+
+    if memory_mapping:
+        kraken2_command.insert(1, "--memory-mapping")
+
     run_command(kraken2_command, f"Kraken2 para {input_fastq.name}", check_existing_output=output_report)
 
 def extract_kraken_reads(input_output, input_fastq, output_fastq):
@@ -90,10 +95,10 @@ def extract_kraken_reads(input_output, input_fastq, output_fastq):
         "--exclude",
         "--fastq-output"
     ]
-    run_command(cmd, f"Excluyendo lecturas Eucariotas 🌱 y Procariotas 🧫 de {input_fastq.name}", suppress_output=True, check_existing_output=output_fastq)
+    run_command(cmd, f"Excluding Eukaryotic 🌱 and Prokaryotic 🧫 reads from {input_fastq.name}", suppress_output=True, check_existing_output=output_fastq)
 
 def filter_viral_fragments_by_motif_and_size(input_fastq, output_fastq, motif="TAATATTA"):
-    print(f"🧪 Filtrando reads virales por tamaño (500-3000bp) y motivo '{motif}' o su RC...")
+    print(f"🧪 Filtering viral reads by size (500-3000bp) and motif '{motif}' or RC...")
     motif = motif.upper()
     motif_rc = str(Seq(motif).reverse_complement())
     kept = 0
@@ -109,10 +114,10 @@ def filter_viral_fragments_by_motif_and_size(input_fastq, output_fastq, motif="T
     with open(output_fastq, "w") as out:
         SeqIO.write(selected, out, "fastq")
 
-    print(f"✅ Lecturas virales seleccionadas: {kept}")
+    print(f"✅ Selected viral reads: {kept}")
 
 def filter_viral_reads_by_size(input_fastq, output_fastq, min_len=100, max_len=3000):
-    print(f"🧪 Filtrando lecturas virales por tamaño ({min_len}–{max_len} nt)...")
+    print(f"🧪 Filtering viral reads by length ({min_len}–{max_len} nt)...")
     total = 0
     kept = 0
     selected = []
@@ -127,15 +132,15 @@ def filter_viral_reads_by_size(input_fastq, output_fastq, min_len=100, max_len=3
     with open(output_fastq, "w") as out:
         SeqIO.write(selected, out, "fastq")
 
-    print(f"📊 Lecturas totales: {total}")
-    print(f"✅ Conservadas para Flye: {kept}")
-    print(f"🗑️ Descartadas: {total - kept}\n")
+    print(f"📊 Total reads: {total}")
+    print(f"✅ Conserved reads for Flye: {kept}")
+    print(f"🗑️ Discarded reads: {total - kept}\n")
 
 def open_fastq(filepath):
     return gzip.open(filepath, "rt") if str(filepath).endswith(".gz") else open(filepath, "r")
 
 def is_low_complexity(seq, entropy_threshold=1.8):
-    """Evalúa si una secuencia tiene baja complejidad usando solo entropía"""
+    """Evaluates whether a sequence has low complexity using entropy only"""
     freqs = [seq.count(n)/len(seq) for n in "ATCG"]
     entropy = -sum(f * math.log2(f) for f in freqs if f > 0)
     return entropy < entropy_threshold
@@ -147,7 +152,7 @@ def is_low_complexity(seq, entropy_threshold=1.8):
     return repetitive or entropy < entropy_threshold
 
 def filter_low_complexity_reads(input_fastq, output_fastq):
-    """Filtra lecturas con baja complejidad"""
+    """Filters low-complexity reads"""
     total = 0
     kept = 0
     discarded = 0
@@ -162,10 +167,10 @@ def filter_low_complexity_reads(input_fastq, output_fastq):
             else:
                 discarded += 1
 
-    print(f"🧼 Filtrado por baja complejidad: {kept} lecturas conservadas, {discarded} descartadas de {total} totales.")
+    print(f"🧼 Filtered by low complexity: {kept} conserved reads, {discarded} discarded from {total} total.")
 
 def fragment_by_motif(input_fastq, output_fastq, motif="TAATATTA"):
-    print(f"✂️ Fragmentando por motivo '{motif}' y su reverse complement...")
+    print(f"✂️  Fragmenting by motif '{motif}' and its reverse complement...")
     motif = motif.upper()
     motif_rc = str(Seq(motif).reverse_complement())
     motif_len = len(motif)
@@ -215,10 +220,10 @@ def fragment_by_motif(input_fastq, output_fastq, motif="TAATATTA"):
     with gzip.open(output_fastq, "wt") if str(output_fastq).endswith(".gz") else open(output_fastq, "w") as out:
         SeqIO.write(total_fragments, out, "fastq")
 
-    print("📊 Fragmentación completada sin filtro de tamaño.")
-    print(f"   🧬 Lecturas procesadas: {total_reads}")
-    print(f"   🔍 Lecturas con motivo: {reads_with_motif}")
-    print(f"   📄 Fragmentos totales generados: {len(total_fragments)}\n")
+    print("📊 Fragmentation completed without size filtering.")
+    print(f"   🧬 Processed reads: {total_reads}")
+    print(f"   🔍 Reads with motif: {reads_with_motif}")
+    print(f"   📄 Total fragments generated: {len(total_fragments)}\n")
 def normalize_read_ids(input_fastq, output_fastq):
     from itertools import count
     counter = count(1)
@@ -230,7 +235,7 @@ def normalize_read_ids(input_fastq, output_fastq):
             SeqIO.write(record, outfile, "fastq")
 
 def synchronize_paired_reads(r1_path, r2_path, synced_r1_path, synced_r2_path):
-    print("🔁 Sincronizando lecturas pareadas entre R1 y R2...")
+    print("🔁 Synchronizing paired reads between R1 and R2...")
 
     r1_path_str = str(r1_path)
     r2_path_str = str(r2_path)
@@ -238,14 +243,14 @@ def synchronize_paired_reads(r1_path, r2_path, synced_r1_path, synced_r2_path):
     synced_r2_path_str = str(synced_r2_path)
 
     if not Path(r1_path_str).is_file() or not Path(r2_path_str).is_file():
-        print("❌ Archivos de entrada R1 o R2 no existen.")
+        print("❌ Input files R1 or R2 do not exist.")
         sys.exit(1)
 
     try:
         r1_reads = SeqIO.index(r1_path_str, "fastq")
         r2_reads = SeqIO.index(r2_path_str, "fastq")
     except Exception as e:
-        print(f"❌ Error al indexar lecturas: {e}")
+        print(f"❌ Error indexing reads: {e}")
         sys.exit(1)
 
     def normalize_keys(index):
@@ -255,7 +260,7 @@ def synchronize_paired_reads(r1_path, r2_path, synced_r1_path, synced_r2_path):
     r2_keymap = normalize_keys(r2_reads)
     shared_ids = set(r1_keymap.keys()) & set(r2_keymap.keys())
 
-    print(f"🧬 Lecturas compartidas encontradas: {len(shared_ids)}")
+    print(f"🧬 Shared reads found: {len(shared_ids)}")
 
     written = 0
     try:
@@ -268,9 +273,9 @@ def synchronize_paired_reads(r1_path, r2_path, synced_r1_path, synced_r2_path):
                     SeqIO.write(r2_record, r2_out, "fastq")
                     written += 1
 
-        print(f"✅ {written} pares sincronizados escritos.")
+        print(f"✅ {written} Synchronized pairs written.")
     except Exception as e:
-        print(f"❌ Error al escribir archivos sincronizados: {e}")
+        print(f"❌ Error writing synchronized files: {e}")
         sys.exit(1)
     finally:
         r1_reads.close()
@@ -278,10 +283,10 @@ def synchronize_paired_reads(r1_path, r2_path, synced_r1_path, synced_r2_path):
 
 def run_recentrifuge(kraken_output_files, kraken_db_dir, output_html):
     if output_html.exists() and output_html.stat().st_size > 0:
-        print(f"✅ Recentrifuge ya se ejecutó, archivo existente: {output_html.name}")
+        print(f"✅ Recentrifuge already executed, existing file: {output_html.name}")
         return
 
-    print("🧪 Ejecutando Recentrifuge sobre archivos Kraken2...")
+    print("🧪 Running Recentrifuge on Kraken2 output files...")
 
     # Generar múltiples -k <file> para cada output Kraken
     k_args = []
@@ -305,7 +310,7 @@ def main():
     from argparse import RawTextHelpFormatter
 
     parser = argparse.ArgumentParser(
-        description="📜 BegomoHunter v1.0 - Pipeline for HTS Begomovirus Detection",
+        description="📜 ViroCatch v1.0 - Pipeline for viral DNA detection from HTS data",
         add_help=True,
         usage="",
         formatter_class=lambda prog: RawTextHelpFormatter(prog, max_help_position=40)
@@ -316,26 +321,29 @@ def main():
     group.add_argument("--input_ONT", type=Path, metavar="", help="Archivo FASTQ de ONT (lecturas largas)")
     group.add_argument("--input_Illumina_R1", type=Path, metavar="", help="FASTQ R1 de Illumina")
     group.add_argument("--input_Illumina_R2", type=Path, metavar="", help="FASTQ R2 de Illumina")
-    group.add_argument("--outdir", required=True, type=Path, metavar="", help="Directorio de salida")
+    group.add_argument("--outdir", required=True, type=Path, metavar="", help="Kraken2 database directory")
     group.add_argument("--threads", type=int, default=8, help="Número de hilos de procesamiento")
     group.add_argument("--db", required=True, type=Path, metavar="", help="Base de datos BLASTn (preformateada con makeblastdb)")
     group.add_argument("--kraken_db", required=True, type=Path, metavar="", help="Directorio de base de datos Kraken2- Download from https://benlangmead.github.io/aws-indexes/k2")
+    group.add_argument("--memory_mapping", action="store_true", help="Activar --memory-mapping en Kraken2")
     group.add_argument("--quality_threshold", type=int, metavar="", default=20, help="Umbral de calidad mínima para trimming")
     group.add_argument("--motif", type=str, default="TAATATTA", help="Motivo para fragmentación RCA-R y filtrado - Por defecto TAATATTA ")
     group.add_argument("--rca_r_product", action="store_true", help="Activar procesamiento RCA-R para ONT")
 
     args = parser.parse_args()
+    global memory_mapping
+    memory_mapping = args.memory_mapping
 
     # Validaciones
     if args.read_type == "short":
         if not args.input_Illumina_R1 or not args.input_Illumina_R2:
-            print("❌ --input_Illumina_R1 y R2 son requeridos con --read_type short.")
+            print("❌ --input_Illumina_R1 y R2 are required with --read_type short.")
             sys.exit(1)
         if args.rca_r_product:
-            print("❌ --rca_r_product solo puede usarse con --read_type long.")
+            print("❌ --rca_r_product can only be used with --read_type long.")
             sys.exit(1)
     elif args.read_type == "long" and not args.input_ONT:
-        print("❌ --input_ONT es requerido con --read_type long.")
+        print("❌ --input_ONT is required with --read_type long.")
         sys.exit(1)
 
     # Preparar carpetas
@@ -395,11 +403,11 @@ def main():
 
         if not synced_r1.is_file() or synced_r1.stat().st_size == 0 or \
            not synced_r2.is_file() or synced_r2.stat().st_size == 0:
-            print(f"❌ Error: Archivos sincronizados no encontrados o vacíos. Saltando ensamblaje.")
+            print(f"❌ Error: Synchronized files not found or empty. Skipping assembly.")
         else:
             assembly_fasta = assembly_dir / "assembly.fasta"
             if assembly_fasta.exists() and assembly_fasta.stat().st_size > 0:
-                print(f"✅ Ensamblaje SPAdes ya existe: {assembly_fasta.name}, se omite.")
+                print(f"✅ SPAdes assembly already exists: {assembly_fasta.name}, Skipping.")
                 assembly_file = assembly_fasta
             else:
                 spades_cmd = [
@@ -408,7 +416,7 @@ def main():
                     "-o", str(assembly_dir),
                     "--meta", "--threads", str(args.threads)
                 ]
-                run_command(spades_cmd, f"Ensamblaje con SPAdes metaviral")
+                run_command(spades_cmd, f"Assembly with SPAdes metaviral")
 
                 scaffolds_file = assembly_dir / "scaffolds.fasta"
                 contigs_file = assembly_dir / "contigs.fasta"
@@ -419,7 +427,7 @@ def main():
                     contigs_file.rename(assembly_fasta)
                     assembly_file = assembly_fasta
                 else:
-                    print("⚠️ Ningún archivo de ensamblaje válido encontrado.")
+                    print("⚠️ No valid assembly file found.")
 
         # Ejecutar Recentrifuge (para reads cortas)
         recentrifuge_html = kraken_dir / f"{base_name}_recentrifuge.html"
@@ -443,7 +451,7 @@ def main():
             "-w", str(args.threads),
             "--html", str(fastplong_html),
             "--json", str(fastplong_json)
-        ], f"Control de calidad con fastplong para {base_name}", check_existing_output=trimmed_fastq)
+        ], f"Quality control with fastplong for {base_name}", check_existing_output=trimmed_fastq)
 
         # 2. Fragmentación ANTES de clasificación si RCA-R
         if args.rca_r_product:
@@ -452,7 +460,7 @@ def main():
             if not fragments_fastq.exists() or fragments_fastq.stat().st_size == 0:
                 fragment_by_motif(trimmed_fastq, fragments_fastq, args.motif)
             else:
-                print(f"✅ Fragmentación ya existe: {fragments_fastq.name}, se omite.")
+                print(f"✅ Fragmentation already exists: {fragments_fastq.name}, skipping.")
 
             input_for_kraken = fragments_fastq  # ✅ común a ambas ramas del if interno
 
@@ -473,7 +481,7 @@ def main():
         filter_low_complexity_reads(viral_fastq, cleaned_viral_fastq)
         filtered_for_flye = cleaned_viral_fastq
 
-        print(f"✅ Se usará directamente '{filtered_for_flye.name}' para ensamblaje con Flye.")
+        print(f"✅ Will be used directly '{filtered_for_flye.name}' for assembly with Flye.")
 
         # 4.1 Si NO es RCA-R y se usa el motivo por defecto, aplica además filtro de tamaño
         if not args.rca_r_product and args.motif == "TAATATTA":
@@ -505,9 +513,9 @@ def main():
                 final_assembly = assembly_dir / "assembly.fasta"
                 shutil.copy(flye_assembly, final_assembly)
                 assembly_file = final_assembly
-                print(f"⚠️ Ensamblaje sin filtrar copiado como fallback a {final_assembly}")
+                print(f"⚠️ Unfiltered assembly copied as fallback to {final_assembly}")
             else:
-                print("⚠️ Ensamblaje Flye no generado.")
+                print("⚠️ Flye assembly not generated.")
 
         # Ejecutar Recentrifuge (para long reads)
         recentrifuge_html = kraken_dir / f"{base_name}_recentrifuge.html"
@@ -529,7 +537,7 @@ def main():
 
         # Ordenar por % identidad descendente y mover a archivo final
         sorted_blast = blast_dir / "blastn_results.sorted.tsv"
-        print("🔧 Ejecutando: Ordenando resultados BLAST por % identidad")
+        print("🔧 Running: Sorting BLASTN results by % identity")
         with open(sorted_blast, "w") as f:
             subprocess.run(["sort", "-k3,3nr", str(blast_out)], stdout=f, check=True)
         shutil.move(str(sorted_blast), str(blast_out))
