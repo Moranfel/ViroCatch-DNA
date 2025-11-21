@@ -66,6 +66,29 @@ def run_command(command, description, suppress_output=False, check_existing_outp
         print(f"❌ Error while running: {e.cmd}\n{e.stderr}")
         sys.exit(1)
 
+####################################
+# Función nueva: Clamping de calidades
+####################################
+def clamp_qualities(input_fastq, output_fastq, max_phred=40):
+    """
+    SPAdes solo admite calidades ASCII 33–73 (Phred 0–40).
+    Esta función trunca cualquier calidad >Q40.
+    """
+    with open(input_fastq, "r") as fin, open(output_fastq, "w") as fout:
+        lines = fin.read().splitlines()
+        for i in range(0, len(lines), 4):
+            fout.write(lines[i] + "\n")      # @read
+            fout.write(lines[i+1] + "\n")    # secuencia
+            fout.write(lines[i+2] + "\n")    # +
+            qual = lines[i+3]
+
+            # Truncado (clamping)
+            clamped = ''.join(
+                chr(min(ord(q), 33 + max_phred)) for q in qual
+            )
+            fout.write(clamped + "\n")
+
+
 def run_kraken2(input_fastq, output_report, output_output, db_path, threads):
     global memory_mapping
     if output_report.exists() and output_report.stat().st_size > 0 and \
@@ -442,6 +465,7 @@ def main():
         fastplong_html = qc_and_trimmed_dir / f"{base_name}_fastplong_report.html"
         fastplong_json = qc_and_trimmed_dir / f"{base_name}_fastplong_report.json"
 
+        # QC con fastplong
         run_command([
             "fastplong",
             "-i", str(input_ont),
@@ -452,8 +476,10 @@ def main():
             "--json", str(fastplong_json)
         ], f"Quality control with fastplong for {base_name}", check_existing_output=trimmed_fastq)
 
+        # Fragmentación si RCA-R
         if args.rca_r_product:
             fragments_fastq = qc_and_trimmed_dir / f"{base_name}_fragments.fastq"
+
             if not fragments_fastq.exists() or fragments_fastq.stat().st_size == 0:
                 fragment_by_motif(trimmed_fastq, fragments_fastq, args.motif)
             else:
@@ -463,63 +489,63 @@ def main():
         else:
             input_for_kraken = trimmed_fastq
 
+        # Kraken2
         kraken_report = kraken_dir / f"{base_name}_kraken2_report.txt"
         kraken_output = kraken_dir / f"{base_name}_kraken2_output.txt"
         run_kraken2(input_for_kraken, kraken_report, kraken_output, args.kraken_db, args.threads)
 
+        # Extracción de virales
         viral_fastq = kraken_dir / f"{base_name}_viral_reads.fastq"
         extract_kraken_reads(kraken_output, input_for_kraken, viral_fastq)
 
+        # Filtro de baja complejidad
         cleaned_viral_fastq = kraken_dir / f"{base_name}_viral_cleaned.fastq"
         filter_low_complexity_reads(viral_fastq, cleaned_viral_fastq)
         filtered_for_flye = cleaned_viral_fastq
 
-        print(f"✅ Will be used directly '{filtered_for_flye.name}' for assembly with Flye.")
-
+        # Filtro de tamaño si no RCA-R
         if not args.rca_r_product and args.motif == "TAATATTA":
             filtered_for_flye = qc_and_trimmed_dir / f"{base_name}_viral_filtered_size_and_complexity.fastq"
             filter_viral_reads_by_size(cleaned_viral_fastq, filtered_for_flye, min_len=500, max_len=3000)
 
-        flye_output_dir = assembly_dir / "flye_output"
-        flye_output_dir.mkdir(exist_ok=True)
-
+        # Normalización solo para Flye
         normalized_for_flye = filtered_for_flye.parent / (filtered_for_flye.stem + "_normalized.fastq")
         normalize_read_ids(filtered_for_flye, normalized_for_flye)
 
+        ####################################
+        # ENSAMBLAJE SPADES (FORZADO)
+        ####################################
         if args.force_spades:
             print("⚠️ SPAdes forzado por el usuario. Flye será omitido.")
-        else:
-            flye_cmd = [
-                "flye",
-                "--nano-raw", str(normalized_for_flye),
-                "--out-dir", str(flye_output_dir),
-                "--threads", str(args.threads),
-                "--genome-size", str(args.genome_size),
-                "--min-overlap", "1000",
-                "--meta"
-            ]
-            run_command(flye_cmd, "Ensamblaje con Flye", check_existing_output=flye_output_dir / "assembly.fasta")
 
-        if args.force_spades:
-            print("🔧 Ejecutando SPAdes (modo ONT) forzado por el usuario")
-            print("⚠️  Flye será omitido automáticamente")
+            # Clamping automático SOLO si se fuerza SPAdes
+            spades_ready = assembly_dir / "viral_reads_clamped.fastq"
+            print("🔧 Ajustando calidades para SPAdes (clamping a Q40)...")
+            clamp_qualities(cleaned_viral_fastq, spades_ready)
 
+            print("🔧 Ejecutando SPAdes en modo unpaired (ONT)")
             spades_cmd = [
                 "python", str(shutil.which("spades.py")),
-                "--nanopore", str(cleaned_viral_fastq),
+                "--nanopore", str(spades_ready),
                 "--threads", str(args.threads),
                 "-o", str(assembly_dir)
             ]
+            run_command(spades_cmd, "Assembly with SPAdes (ONT, clamped)")
 
-            run_command(spades_cmd, "Assembly with SPAdes (ONT, --nanopore)")
-
+            # Detectar contigs
             assembly_candidate = assembly_dir / "contigs.fasta"
             if assembly_candidate.exists() and assembly_candidate.stat().st_size > 0:
                 assembly_file = assembly_candidate
             else:
                 print("❌ SPAdes no generó contigs. Revisa warnings.log y spades.log")
 
+        ####################################
+        # ENSAMBLAJE FLYE (SOLO si no force_spades)
+        ####################################
         else:
+            flye_output_dir = assembly_dir / "flye_output"
+            flye_output_dir.mkdir(exist_ok=True)
+
             flye_cmd = [
                 "flye",
                 "--nano-raw", str(normalized_for_flye),
@@ -539,16 +565,8 @@ def main():
                 print(f"🧬 Ensamblaje Flye copiado a {assembly_file}")
             else:
                 print("❌ Flye no generó ensamblaje.")
-        if not assembly_file or not assembly_file.exists():
-            flye_assembly = flye_output_dir / "assembly.fasta"
-            if flye_assembly.exists() and flye_assembly.stat().st_size > 0:
-                final_assembly = assembly_dir / "assembly.fasta"
-                shutil.copy(flye_assembly, final_assembly)
-                assembly_file = final_assembly
-                print(f"⚠️ Unfiltered assembly copied as fallback to {final_assembly}")
-            else:
-                print("⚠️ Flye assembly not generated.")
 
+        # Recentrifuge
         recentrifuge_html = kraken_dir / f"{base_name}_recentrifuge.html"
         run_recentrifuge([kraken_output], args.kraken_db, recentrifuge_html)
 
